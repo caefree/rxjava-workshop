@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:id="@+id/exercise_name"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            tools:text="Burpees" />
+
+
+        <TextView
+            android:id="@+id/exercise_variant"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="4dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            tools:text="Strength" />
+
+        <TextView
+            android:id="@+id/exercise_reps"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:paddingLeft="4dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            tools:text="20" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>

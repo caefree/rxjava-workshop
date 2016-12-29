@@ -1,0 +1,433 @@
+{
+  "exercises": [
+    {
+      "id": "burpee-deepfrogs",
+      "practice_volume": 10,
+      "training_volume": 20,
+      "variant": "Strength",
+      "difficulty": 0.650,
+      "density": 0.150,
+      "value": 0.5,
+      "rep_time": 2.9
+    },
+    //   0
+    {
+      "id": "burpee-frogs",
+      "practice_volume": 10,
+      "training_volume": 20,
+      "variant": "Standard",
+      "difficulty": 0.650,
+      "density": 0.150,
+      "value": 0.5,
+      "rep_time": 2.5
+    },
+    //   1
+    {
+      "id": "burpees",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Standard",
+      "difficulty": 0.650,
+      "density": 0.150,
+      "value": 0.5,
+      "rep_time": 2.0
+    },
+    //   2
+    {
+      "id": "burpee-squat-jumps",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Strength",
+      "difficulty": 0.650,
+      "density": 0.150,
+      "value": 0.5,
+      "rep_time": 1.8
+    },
+    //   3
+    {
+      "id": "climbers",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Standard",
+      "difficulty": 0.725,
+      "density": 0.850,
+      "value": 0.7,
+      "rep_time": 0.5
+    },
+    //   4
+    {
+      "id": "crunches",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Endurance",
+      "difficulty": 0.175,
+      "density": 0.975,
+      "value": 1.0,
+      "rep_time": 0.9
+    },
+    //   5
+    {
+      "id": "froggers",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Strength",
+      "difficulty": 0.750,
+      "density": 0.275,
+      "value": 0.3,
+      "rep_time": 0.8
+    },
+    //   6
+    {
+      "id": "hand-help-leg-levers",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Endurance",
+      "difficulty": 0.200,
+      "density": 0.775,
+      "value": 1.0,
+      "rep_time": 0.7
+    },
+    //   7
+    {
+      "id": "hand-help-lunges",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Endurance",
+      "difficulty": 0.025,
+      "density": 0.600,
+      "value": 0.8,
+      "rep_time": 0.6
+    },
+    //   8
+    {
+      "id": "hand-help-lunge-walk",
+      "practice_volume": 20,
+      "training_volume": 40,
+      "variant": "Endurance",
+      "difficulty": 0.100,
+      "density": 0.625,
+      "value": 0.8,
+      "rep_time": 0.7
+    },
+    //   9
+    {
+      "id": "hand-help-squats",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Endurance",
+      "difficulty": 0.125,
+      "density": 0.175,
+      "value": 0.8,
+      "rep_time": 1.0
+    },
+    //  10
+    {
+      "id": "hand-help-standups",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Endurance",
+      "difficulty": 0.250,
+      "density": 0.475,
+      "value": 0.7,
+      "rep_time": 1.9
+    },
+    //  11
+    {
+      "id": "high-jumps",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Strength",
+      "difficulty": 0.955,
+      "density": 0.985,
+      "value": 0.3,
+      "rep_time": 0.4
+    },
+    //  12
+    {
+      "id": "high-knees",
+      "practice_volume": 25,
+      "training_volume": 50,
+      "variant": "Endurance",
+      "difficulty": 0.225,
+      "density": 0.150,
+      "value": 1.0,
+      "rep_time": 0.2
+    },
+    //  13
+    {
+      "id": "jackknives",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Strength",
+      "difficulty": 0.775,
+      "density": 0.950,
+      "value": 0.6,
+      "rep_time": 1.0
+    },
+    //  14
+    {
+      "id": "jumping-jacks",
+      "practice_volume": 25,
+      "training_volume": 100,
+      "variant": "Standard",
+      "difficulty": 0.075,
+      "density": 0.125,
+      "value": 1.0,
+      "rep_time": 0.3
+    },
+    //  15
+    {
+      "id": "jumping-pullups",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Endurance",
+      "difficulty": 0.825,
+      "density": 0.500,
+      "value": 0.6,
+      "rep_time": 1.5
+    },
+    //  16
+    {
+      "id": "jumps",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Standard",
+      "difficulty": 0.800,
+      "density": 0.750,
+      "value": 0.8,
+      "rep_time": 0.3
+    },
+    //  17
+    {
+      "id": "knee-pushups",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Endurance",
+      "difficulty": 0.050,
+      "density": 0.675,
+      "value": 0.9,
+      "rep_time": 1.2
+    },
+    //  18
+    {
+      "id": "lunges",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Standard",
+      "difficulty": 0.300,
+      "density": 0.625,
+      "value": 1.0,
+      "rep_time": 0.7
+    },
+    //  19
+    {
+      "id": "lunge-walk",
+      "practice_volume": 20,
+      "training_volume": 40,
+      "variant": "Standard",
+      "difficulty": 0.375,
+      "density": 0.650,
+      "value": 1.0,
+      "rep_time": 0.7
+    },
+    //  20
+    {
+      "id": "mountain-climbers",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Endurance",
+      "difficulty": 0.425,
+      "density": 0.800,
+      "value": 1.0,
+      "rep_time": 0.4
+    },
+    //  21
+    {
+      "id": "muscleups",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Strength",
+      "difficulty": 0.975,
+      "density": 0.575,
+      "value": 1.0,
+      "rep_time": 4.0
+    },
+    //  22
+    {
+      "id": "oh-pushups",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Strength",
+      "difficulty": 0.950,
+      "density": 0.750,
+      "value": 1.0,
+      "rep_time": 4.0
+    },
+    //  23
+    {
+      "id": "pikes",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Endurance",
+      "difficulty": 0.475,
+      "density": 0.650,
+      "value": 1.0,
+      "rep_time": 2.0
+    },
+    //  24
+    {
+      "id": "pistols",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Strength",
+      "difficulty": 0.925,
+      "density": 0.850,
+      "value": 1.0,
+      "rep_time": 3.0
+    },
+    //  25
+    {
+      "id": "pullups",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Standard",
+      "difficulty": 0.500,
+      "density": 0.900,
+      "value": 1.0,
+      "rep_time": 1.2
+    },
+    //  26
+    {
+      "id": "pushups",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Standard",
+      "difficulty": 0.400,
+      "density": 0.825,
+      "value": 1.0,
+      "rep_time": 1.0
+    },
+    //  27
+    {
+      "id": "run",
+      "practice_volume": 100,
+      "training_volume": 200,
+      "variant": "Standard",
+      "difficulty": 0.150,
+      "density": 0.550,
+      "value": 1.0,
+      "rep_time": 0.2
+    },
+    //  28
+    {
+      "id": "situps",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Standard",
+      "difficulty": 0.325,
+      "density": 0.700,
+      "value": 0.7,
+      "rep_time": 1.0
+    },
+    //  29
+    {
+      "id": "split-lunges",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Strength",
+      "difficulty": 0.525,
+      "density": 0.375,
+      "value": 1.0,
+      "rep_time": 0.6
+    },
+    //  30
+    {
+      "id": "sprawl-frogs",
+      "practice_volume": 10,
+      "training_volume": 20,
+      "variant": "Endurance",
+      "difficulty": 0.700,
+      "density": 0.450,
+      "value": 0.8,
+      "rep_time": 2.2
+    },
+    //  31
+    {
+      "id": "sprawls",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Endurance",
+      "difficulty": 0.550,
+      "density": 0.425,
+      "value": 1.0,
+      "rep_time": 1.9
+    },
+    //  32
+    {
+      "id": "squats",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Standard",
+      "difficulty": 0.600,
+      "density": 0.400,
+      "value": 1.0,
+      "rep_time": 1.0
+    },
+    //  33
+    {
+      "id": "standup-jumps",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Strength",
+      "difficulty": 0.905,
+      "density": 0.525,
+      "value": 0.2,
+      "rep_time": 2.1
+    },
+    //  34
+    {
+      "id": "standups",
+      "practice_volume": 10,
+      "training_volume": 10,
+      "variant": "Standard",
+      "difficulty": 0.675,
+      "density": 0.500,
+      "value": 0.4,
+      "rep_time": 2.0
+    },
+    //  35
+    {
+      "id": "straight-leg-levers",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Standard",
+      "difficulty": 0.350,
+      "density": 0.800,
+      "value": 0.9,
+      "rep_time": 0.8
+    },
+    //  36
+    {
+      "id": "strict-hs-pushups",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Strength",
+      "difficulty": 0.875,
+      "density": 0.925,
+      "value": 1.0,
+      "rep_time": 3.0
+    },
+    //  37
+    {
+      "id": "toes-to-bar",
+      "practice_volume": 10,
+      "training_volume": 25,
+      "variant": "Strength",
+      "difficulty": 0.825,
+      "density": 0.725,
+      "value": 0.9,
+      "rep_time": 1.2
+    }
+    //  38
+  ]
+}

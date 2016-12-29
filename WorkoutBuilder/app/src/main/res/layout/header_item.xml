@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:padding="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Round"
+        android:gravity="left|center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/roundNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="1"
+        android:gravity="left|center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"/>
+
+</LinearLayout>
