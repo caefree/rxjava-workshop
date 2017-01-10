@@ -2,20 +2,28 @@ package freeletics.com.workoutbuilder.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Value;
 
 @Value
+@Builder(toBuilder = true)
 public class Exercise {
 
-    ExerciseDef id;
+    private final ExerciseDef id;
 
-    Variant variant;
+    private final Variant variant;
 
     @SerializedName("training_volume")
-    int trainingVolume;
+    private final int trainingVolume;
 
     @SerializedName("rep_time")
-    float repetitionTime;
+    private final float repetitionTime;
 
     public enum Variant {
         Endurance,

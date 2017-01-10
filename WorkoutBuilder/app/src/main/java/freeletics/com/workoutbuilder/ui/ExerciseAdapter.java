@@ -14,15 +14,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import freeletics.com.workoutbuilder.model.Exercise;
 import freeletics.com.workoutbuilder.R;
+import freeletics.com.workoutbuilder.model.RoundExercise;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
-    private ImmutableList<Exercise> exercises;
+    private ImmutableList<RoundExercise> exercises;
 
 
-    public ExerciseAdapter(List<Exercise> exerciseDefs) {
+    public ExerciseAdapter(List<RoundExercise> exerciseDefs) {
         this.exercises = ImmutableList.copyOf(exerciseDefs);
     }
 
@@ -51,16 +52,16 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         else if(holder instanceof VHItem)
         {
-            Exercise currentItem = getItem(position-1);
+            RoundExercise currentItem = getItem(position-1);
             VHItem VHitem = (VHItem)holder;
-            VHitem.exerciseName.setText(currentItem.getId().name());
-            VHitem.exerciseVariant.setText(currentItem.getVariant().name());
-            VHitem.exerciseReps.setText(String.valueOf(currentItem.getTrainingVolume()));
+            VHitem.exerciseName.setText(currentItem.getExercise().getId().name());
+            VHitem.exerciseVariant.setText(currentItem.getExercise().getVariant().name());
+            VHitem.exerciseReps.setText(String.valueOf(currentItem.getExercise().getTrainingVolume()));
         }
 
     }
 
-    private Exercise getItem(int position)
+    private RoundExercise getItem(int position)
     {
         return exercises.get(position);
     }
