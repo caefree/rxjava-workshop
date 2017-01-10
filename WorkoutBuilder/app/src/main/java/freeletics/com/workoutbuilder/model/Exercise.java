@@ -19,6 +19,8 @@ public class Exercise {
     @SerializedName("rep_time")
     private final float repetitionTime;
 
+    float density;
+
     public enum Variant {
         Endurance,
         Strength,

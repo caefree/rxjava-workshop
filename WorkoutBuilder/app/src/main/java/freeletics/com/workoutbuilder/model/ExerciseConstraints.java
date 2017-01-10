@@ -60,7 +60,7 @@ public class ExerciseConstraints {
                     SprawlFrogs, KneePushups, Froggers);
 
 
-    static final List<Exercise.ExerciseDef> TARGETING_CORE =
+    public static final List<Exercise.ExerciseDef> TARGETING_CORE =
             Arrays.asList(Sprawls, Squats, MountainClimbers, Burpees, Crunches, HandHelpLegLevers,
                     BurpeeSquatJumps, BurpeeDeepfrogs, BurpeeFrogs, Climbers, Froggers,
                     HandHelpSquats, HandHelpStandups, Jackknives, OhPushups, Pistols,

@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -36,7 +35,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action2;
 import rx.functions.Func0;
 import rx.functions.Func1;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
@@ -106,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
                         WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        
+
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
         final FormController formController = setUpForm();
