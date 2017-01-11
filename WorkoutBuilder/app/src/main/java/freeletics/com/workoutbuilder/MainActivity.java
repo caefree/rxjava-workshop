@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -33,6 +34,7 @@ import ix.Ix;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
@@ -100,10 +102,9 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.setDebug(true);
         ButterKnife.bind(this);
 
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
                         WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
+        
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
         final FormController formController = setUpForm();
@@ -134,9 +135,11 @@ public class MainActivity extends AppCompatActivity {
                             .flatMap((exercise ->
                                     Observable.range(1, roundCount)
                                             .map(round -> {
+                                                final int trainingVolume = repCount - ((round - 1) * repDecrement);
                                                 Exercise newExercise = exercise
                                                         .toBuilder()
-                                                        .trainingVolume(repCount - ((round - 1) * repDecrement))
+                                                        .trainingVolume(trainingVolume)
+                                                        .repetitionTime(trainingVolume * exercise.getRepetitionTime())
                                                         .build();
                                                 return RoundExercise.builder()
                                                         .roundIndex(round)
