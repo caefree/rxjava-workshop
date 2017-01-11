@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import freeletics.com.workoutbuilder.R;
 import freeletics.com.workoutbuilder.model.RoundExercise;
 import freeletics.com.workoutbuilder.model.Workout;
+import ix.Ix;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -43,6 +44,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof VHHeader) {
             VHHeader vhHeader = (VHHeader) holder;
             vhHeader.workoutName.setText(workout.getName());
+            vhHeader.roundCount.setText(
+                    Ix.from(workout.getRoundExercises())
+                            .map(RoundExercise::getRoundIndex)
+                            .max()
+                            .map(String::valueOf)
+                            .first());
         } else if (holder instanceof VHFooter) {
             VHFooter vhFooter = (VHFooter) holder;
             vhFooter.repCount.setText("0");
@@ -95,6 +102,9 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         @BindView(R.id.workoutName)
         TextView workoutName;
+
+        @BindView(R.id.roundCount)
+        TextView roundCount;
 
         VHHeader(View itemView) {
             super(itemView);

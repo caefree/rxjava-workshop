@@ -1,29 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:padding="8dp"
-    android:background="@color/colorPrimary"
-    android:visibility="visible">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="8dp"
+                android:background="@color/colorPrimary"
+                android:visibility="visible">
 
     <TextView
+        android:id="@+id/label1"
         android:padding="4dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
         android:text="Workout:"
-        android:gravity="left|center_vertical"
+        android:layout_alignParentLeft="true"
         android:textSize="20sp"
         android:textColor="@color/colorAccent"/>
 
     <TextView
+        android:layout_toRightOf="@id/label1"
         android:id="@+id/workoutName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         tools:text="Athena"
-        android:gravity="left|center_vertical"
+        android:gravity="center_vertical"
         android:textSize="20sp"
         android:textColor="@color/colorAccent"/>
 
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/roundCount"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        tools:text="0"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/label2"
+        android:padding="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/roundCount"
+        android:text="Rounds:"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"/>
+
+</RelativeLayout>

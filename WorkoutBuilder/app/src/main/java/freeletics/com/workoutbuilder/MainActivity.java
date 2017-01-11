@@ -153,10 +153,11 @@ public class MainActivity extends AppCompatActivity {
                             })
                             .toList();
                 })
-                .map(roundExercises -> {
-                    final int roundCount = Ix.from(roundExercises).map(RoundExercise::getRoundIndex).max().first();
-                    return Workout.builder().name(workoutName).roundExercises(ImmutableList.copyOf(roundExercises)).roundCount(roundCount).build();
-                })
+                .map(roundExercises ->
+                        Workout.builder().name(workoutName)
+                                .roundExercises(ImmutableList.copyOf(roundExercises))
+                                .build()
+                )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(workout -> {
                     ExerciseAdapter adapter = new ExerciseAdapter(workout);
