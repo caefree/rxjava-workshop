@@ -3,24 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     android:padding="8dp"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:visibility="visible">
 
     <TextView
         android:padding="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Round"
+        android:text="Workout:"
         android:gravity="left|center_vertical"
         android:textSize="20sp"
         android:textColor="@color/colorAccent"/>
 
     <TextView
-        android:id="@+id/roundNumber"
+        android:id="@+id/workoutName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="1"
+        tools:text="Athena"
         android:gravity="left|center_vertical"
         android:textSize="20sp"
         android:textColor="@color/colorAccent"/>

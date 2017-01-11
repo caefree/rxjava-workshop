@@ -7,6 +7,7 @@ import lombok.Value;
 @Builder(toBuilder = true)
 public class RoundExercise {
 
-    private final Integer round;
+    private final Integer roundIndex;
+    private final Integer exerciseIndex;
     private final Exercise exercise;
 }

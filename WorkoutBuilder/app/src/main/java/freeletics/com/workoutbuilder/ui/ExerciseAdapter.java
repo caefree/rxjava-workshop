@@ -6,90 +6,95 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.common.collect.ImmutableList;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import freeletics.com.workoutbuilder.model.Exercise;
 import freeletics.com.workoutbuilder.R;
 import freeletics.com.workoutbuilder.model.RoundExercise;
+import freeletics.com.workoutbuilder.model.Workout;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int TYPE_HEADER = 0;
-    private static final int TYPE_ITEM = 1;
-    private ImmutableList<RoundExercise> exercises;
+    private int VIEW_HEADER = -1;
+    private int VIEW_FOOOTER = +1;
 
+    private final Workout workout;
 
-    public ExerciseAdapter(List<RoundExercise> exerciseDefs) {
-        this.exercises = ImmutableList.copyOf(exerciseDefs);
+    public ExerciseAdapter(Workout workout) {
+        this.workout = workout;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == TYPE_HEADER)
-        {
+        if (viewType == VIEW_HEADER) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_item, parent, false);
-            return  new VHHeader(v);
-        }
-        else if(viewType == TYPE_ITEM)
-        {
+            return new VHHeader(v);
+        } else if (viewType == VIEW_FOOOTER) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_item, parent, false);
+            return new VHFooter(v);
+        } else {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
             return new VHItem(v);
         }
 
-        return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof VHHeader)
-        {
-            VHHeader VHheader = (VHHeader)holder;
-            VHheader.roundNumber.setText("1");
-        }
-        else if(holder instanceof VHItem)
-        {
-            RoundExercise currentItem = getItem(position-1);
-            VHItem VHitem = (VHItem)holder;
+        if (holder instanceof VHHeader) {
+            VHHeader vhHeader = (VHHeader) holder;
+            vhHeader.workoutName.setText(workout.getName());
+        } else if (holder instanceof VHFooter) {
+            VHFooter vhFooter = (VHFooter) holder;
+            vhFooter.repCount.setText("0");
+            vhFooter.timeCount.setText("0");
+        } else {
+            RoundExercise currentItem = getItem(position - 1);
+            VHItem VHitem = (VHItem) holder;
             VHitem.exerciseName.setText(currentItem.getExercise().getId().name());
             VHitem.exerciseVariant.setText(currentItem.getExercise().getVariant().name());
             VHitem.exerciseReps.setText(String.valueOf(currentItem.getExercise().getTrainingVolume()));
         }
-
     }
 
-    private RoundExercise getItem(int position)
-    {
-        return exercises.get(position);
+    private RoundExercise getItem(int position) {
+        return workout.getRoundExercises().get(position);
     }
-
 
     @Override
     public int getItemViewType(int position) {
-        if(isPositionHeader(position))
-            return TYPE_HEADER;
-        return TYPE_ITEM;
+        if (position == 0) {
+            return VIEW_HEADER;
+        } else if (position == getItemCount() - 1) {
+            return VIEW_FOOOTER;
+        } else {
+            return 0;
+        }
     }
 
-    private boolean isPositionHeader(int position)
-    {
-        return position == 0;
-    }
-
-    //increasing getItemcount to 1. This will be the row of header.
     @Override
     public int getItemCount() {
-        return exercises.size()+1;
+        return workout.getRoundExercises().size() + 2;
     }
 
 
-    class VHHeader extends RecyclerView.ViewHolder{
+    class VHFooter extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.roundNumber)
-        TextView roundNumber;
+        @BindView(R.id.timeCount)
+        TextView timeCount;
+
+        @BindView(R.id.repCount)
+        TextView repCount;
+
+        VHFooter(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class VHHeader extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.workoutName)
+        TextView workoutName;
 
         VHHeader(View itemView) {
             super(itemView);
@@ -97,7 +102,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    class VHItem extends RecyclerView.ViewHolder{
+    class VHItem extends RecyclerView.ViewHolder {
 
         @BindView(R.id.exercise_name)
         TextView exerciseName;

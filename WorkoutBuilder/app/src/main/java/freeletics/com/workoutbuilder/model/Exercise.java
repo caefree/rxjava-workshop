@@ -2,13 +2,7 @@ package freeletics.com.workoutbuilder.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.Value;
 
 @Value

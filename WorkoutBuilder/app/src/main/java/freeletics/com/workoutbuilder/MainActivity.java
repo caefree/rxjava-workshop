@@ -13,11 +13,12 @@ import com.github.dkharrat.nexusdialog.FormController;
 import com.github.dkharrat.nexusdialog.FormModel;
 import com.github.dkharrat.nexusdialog.controllers.FormSectionController;
 import com.github.dkharrat.nexusdialog.controllers.SelectionController;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
-import com.pacoworks.rxcurrying.RxCurryingFunc;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,17 +26,23 @@ import freeletics.com.workoutbuilder.api.ExerciseApi;
 import freeletics.com.workoutbuilder.api.JsonExerciseApi;
 import freeletics.com.workoutbuilder.model.Exercise;
 import freeletics.com.workoutbuilder.model.Exercises;
+import freeletics.com.workoutbuilder.model.RoundExercise;
+import freeletics.com.workoutbuilder.model.Workout;
 import freeletics.com.workoutbuilder.ui.ExerciseAdapter;
 import ix.Ix;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String FILTER_VARIANT = "filterVariant";
+    public static final String FILTER_EXERCISE_1 = "filterExercise1";
+    public static final String FILTER_EXERCISE_2 = "filterExercise2";
+    public static final String FILTER_EXERCISE_3 = "filterExercise3";
+    public static final String FILTER_ROUND_COUNT = "filterRoundCount";
+    public static final String FILTER_INIT_REP = "filterInitRep";
+    public static final String FILTER_DECREMENT = "filterDecrement";
 
     @BindView(R.id.exercise_list)
     RecyclerView recyclerView;
@@ -47,15 +54,36 @@ public class MainActivity extends AppCompatActivity {
         FormController formController = new FormController(this);
         FormSectionController section = new FormSectionController(this, "Workout Builder");
 
-        SelectionController variantSelector = new SelectionController(this, FILTER_VARIANT, "Filter Variant", true, "Select",
-                Ix.fromArray(Exercise.Variant.values()).map(Enum::name).toList(), true);
+        SelectionController exerciseSelector1 = new SelectionController(this, FILTER_EXERCISE_1, "Exercise", true, "Select One",
+                Ix.fromArray(Exercise.ExerciseDef.values()).map(Enum::name).toList(), true);
 
-        section.addElement(variantSelector);
+        SelectionController exerciseSelector2 = new SelectionController(this, FILTER_EXERCISE_2, "Exercise", true, "Select Two",
+                Ix.fromArray(Exercise.ExerciseDef.values()).map(Enum::name).toList(), true);
+
+        SelectionController exerciseSelector3 = new SelectionController(this, FILTER_EXERCISE_3, "Exercise", true, "Select Three",
+                Ix.fromArray(Exercise.ExerciseDef.values()).map(Enum::name).toList(), true);
+
+        SelectionController roundSelector = new SelectionController(this, FILTER_ROUND_COUNT, "Number of Rounds", true, "0",
+                Ix.range(1,5).map(String::valueOf).toList(), true);
+
+
+        SelectionController repNumberEditText = new SelectionController(this, FILTER_INIT_REP, "Initial Rep Count", true, "50",
+                Ix.fromArray(25, 50).map(String::valueOf).toList(), true);
+
+
+        SelectionController decrementNumberEditTExt = new SelectionController(this, FILTER_DECREMENT, "Decrement", true, "10",
+                Ix.fromArray(5, 10).map(String::valueOf).toList(), true);
+
+
+        section.addElement(exerciseSelector1);
+        section.addElement(exerciseSelector2);
+        section.addElement(exerciseSelector3);
+        section.addElement(roundSelector);
+        section.addElement(repNumberEditText);
+        section.addElement(decrementNumberEditTExt);
 
         formController.addSection(section);
         formController.recreateViews(form);
-
-        formController.getModel().setValue("filterVariant", Exercise.Variant.All.name());
 
         return formController;
 
@@ -67,45 +95,97 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        JsonExerciseApi api = new JsonExerciseApi(this);
+
         ButterKnife.setDebug(true);
         ButterKnife.bind(this);
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE |
+                        WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(new ExerciseAdapter(ImmutableList.of()));
 
-        buildPropertyChangeListener(setUpForm())
+        final FormController formController = setUpForm();
+
+        formController.getModel().setValue(FILTER_EXERCISE_1, Exercise.ExerciseDef.Burpees.name());
+        formController.getModel().setValue(FILTER_EXERCISE_2, Exercise.ExerciseDef.Squats.name());
+        formController.getModel().setValue(FILTER_EXERCISE_3, Exercise.ExerciseDef.Situps.name());
+        formController.getModel().setValue(FILTER_ROUND_COUNT, "5");
+        formController.getModel().setValue(FILTER_INIT_REP, "25");
+        formController.getModel().setValue(FILTER_DECREMENT, "5");
+
+        final String workoutName = "Athena";
+
+        buildPropertyChangeListener(formController)
                 .flatMap(model -> {
-                    String variant = model.getValue(FILTER_VARIANT).toString();
-                    return getFullExerciseList(new JsonExerciseApi(this))
-                            .filter(withVariant(variant))
+                    final Exercise.ExerciseDef exerciseOne = Exercise.ExerciseDef.valueOf(model.getValue(FILTER_EXERCISE_1).toString());
+                    final Exercise.ExerciseDef exerciseTwo = Exercise.ExerciseDef.valueOf(model.getValue(FILTER_EXERCISE_2).toString());
+                    final Exercise.ExerciseDef exerciseThree = Exercise.ExerciseDef.valueOf(model.getValue(FILTER_EXERCISE_3).toString());
+
+                    final Integer roundCount = Integer.valueOf(model.getValue(FILTER_ROUND_COUNT).toString());
+                    final Integer repCount = Integer.valueOf(model.getValue(FILTER_INIT_REP).toString());
+                    final Integer repDecrement = Integer.valueOf(model.getValue(FILTER_DECREMENT).toString());
+
+                    ImmutableList<Exercise.ExerciseDef> exerciseDefList = ImmutableList.of(exerciseOne, exerciseTwo, exerciseThree);
+
+                    return getFullExerciseList(api)
+                            .filter(withExercises(exerciseDefList))
+                            .flatMap((exercise ->
+                                    Observable.range(1, roundCount)
+                                            .map(round -> {
+                                                Exercise newExercise = exercise
+                                                        .toBuilder()
+                                                        .trainingVolume(repCount - ((round - 1) * repDecrement))
+                                                        .build();
+                                                return RoundExercise.builder()
+                                                        .roundIndex(round)
+                                                        .exerciseIndex(exerciseDefList.indexOf(exercise.getId()) + 1)
+                                                        .exercise(newExercise)
+                                                        .build();
+                                            })))
+                            .sorted((roundExercise, roundExercise2) -> {
+                                Integer compare = roundExercise.getRoundIndex().compareTo(roundExercise2.getRoundIndex());
+                                if (compare == 0) {
+                                    return roundExercise.getExerciseIndex().compareTo(roundExercise2.getExerciseIndex());
+                                }
+                                return compare;
+                            })
                             .toList();
                 })
+                .map(roundExercises -> {
+                    final int roundCount = Ix.from(roundExercises).map(RoundExercise::getRoundIndex).max().first();
+                    return Workout.builder().name(workoutName).roundExercises(ImmutableList.copyOf(roundExercises)).roundCount(roundCount).build();
+                })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list -> recyclerView.swapAdapter(new ExerciseAdapter(list), true));
+                .subscribe(workout -> {
+                    ExerciseAdapter adapter = new ExerciseAdapter(workout);
+                    recyclerView.setAdapter(adapter);
+                });
+
     }
+
+    @NonNull
+    private Func1<Exercise, Boolean> withExercises(List<Exercise.ExerciseDef> exerciseDefs) {
+        return exercise -> FluentIterable.from(exerciseDefs).contains(exercise.getId());
+    }
+
 
     @RxLogObservable(value = RxLogObservable.Scope.EVERYTHING)
     private Observable<FormModel> buildPropertyChangeListener(final FormController formController) {
-        return Observable.create(new Observable.OnSubscribe<FormModel>() {
-            @Override
-            public void call(Subscriber<? super FormModel> subscriber) {
-                PropertyChangeListener listener = new PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(PropertyChangeEvent evt) {
-                        if (!subscriber.isUnsubscribed()) {
-                            subscriber.onNext(formController.getModel());
-                        } else {
-                            formController.getModel().removePropertyChangeListener(this);
-                        }
+        return Observable.create(subscriber -> {
+            PropertyChangeListener listener = new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (!subscriber.isUnsubscribed()) {
+                        subscriber.onNext(formController.getModel());
+                    } else {
+                        formController.getModel().removePropertyChangeListener(this);
                     }
-                };
+                }
+            };
 
-                formController.getModel().addPropertyChangeListener(listener);
-
-            }
+            formController.getModel().addPropertyChangeListener(listener);
         });
 
     }
@@ -116,12 +196,6 @@ public class MainActivity extends AppCompatActivity {
         return api.exercises()
                 .flatMapIterable(Exercises::getExercises)
                 .subscribeOn(Schedulers.io());
-    }
-
-    private Func1<? super Exercise, Boolean> withVariant(String variant) {
-        Exercise.Variant exerciseVariant = Exercise.Variant.valueOf(variant);
-        return exercise -> exerciseVariant == Exercise.Variant.All ||
-                exercise.getVariant() == exerciseVariant;
     }
 
 }
