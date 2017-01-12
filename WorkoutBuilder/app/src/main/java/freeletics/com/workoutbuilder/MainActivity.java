@@ -32,8 +32,6 @@ import freeletics.com.workoutbuilder.ui.ExerciseAdapter;
 import ix.Ix;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action2;
-import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
