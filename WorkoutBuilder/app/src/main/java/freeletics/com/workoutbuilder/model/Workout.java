@@ -12,4 +12,6 @@ public class Workout {
 
     private final String name;
     private final ImmutableList<RoundExercise> roundExercises;
+    private final float sumOfTime;
+    private final int sumOfReps;
 }

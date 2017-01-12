@@ -33,6 +33,8 @@ import freeletics.com.workoutbuilder.ui.ExerciseAdapter;
 import ix.Ix;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action2;
+import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
@@ -136,31 +138,37 @@ public class MainActivity extends AppCompatActivity {
                                     Observable.range(1, roundCount)
                                             .map(round -> {
                                                 final int trainingVolume = repCount - ((round - 1) * repDecrement);
-                                                Exercise newExercise = exercise
-                                                        .toBuilder()
-                                                        .trainingVolume(trainingVolume)
-                                                        .repetitionTime(trainingVolume * exercise.getRepetitionTime())
-                                                        .build();
                                                 return RoundExercise.builder()
                                                         .roundIndex(round)
                                                         .exerciseIndex(exerciseDefList.indexOf(exercise.getId()) + 1)
-                                                        .exercise(newExercise)
+                                                        .exercise(exercise
+                                                                .toBuilder()
+                                                                .trainingVolume(trainingVolume)
+                                                                .repetitionTime(trainingVolume * exercise.getRepetitionTime())
+                                                                .build())
                                                         .build();
                                             })))
                             .sorted((roundExercise, roundExercise2) -> {
                                 Integer compare = roundExercise.getRoundIndex().compareTo(roundExercise2.getRoundIndex());
-                                if (compare == 0) {
-                                    return roundExercise.getExerciseIndex().compareTo(roundExercise2.getExerciseIndex());
-                                }
-                                return compare;
+                                return compare == 0
+                                        ? roundExercise.getExerciseIndex().compareTo(roundExercise2.getExerciseIndex())
+                                        : compare;
+
                             })
-                            .toList();
+                            .toList()
+                            .zipWith(Observable.just(Workout.builder().name(workoutName)),
+                                    (roundExercises, workoutBuilder) -> {
+                                        Workout previous = workoutBuilder.build();
+                                        for (RoundExercise roundExercise : roundExercises) {
+                                            previous = workoutBuilder
+                                                    .sumOfReps(previous.getSumOfReps() +
+                                                            roundExercise.getExercise().getTrainingVolume())
+                                                    .build();
+                                        }
+                                        return workoutBuilder.build();
+
+                                    });
                 })
-                .map(roundExercises ->
-                        Workout.builder().name(workoutName)
-                                .roundExercises(ImmutableList.copyOf(roundExercises))
-                                .build()
-                )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(workout -> {
                     ExerciseAdapter adapter = new ExerciseAdapter(workout);

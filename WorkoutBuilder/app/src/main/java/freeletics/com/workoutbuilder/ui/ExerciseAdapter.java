@@ -52,8 +52,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .first());
         } else if (holder instanceof VHFooter) {
             VHFooter vhFooter = (VHFooter) holder;
-            vhFooter.repCount.setText("0");
-            vhFooter.timeCount.setText("0");
+            vhFooter.repCount.setText(String.valueOf(workout.getSumOfReps()));
+            vhFooter.timeCount.setText(String.valueOf(workout.getSumOfTime()));
         } else {
             RoundExercise currentItem = getItem(position - 1);
             VHItem VHitem = (VHItem) holder;
