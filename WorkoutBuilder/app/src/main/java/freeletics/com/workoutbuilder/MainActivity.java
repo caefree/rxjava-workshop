@@ -120,6 +120,9 @@ public class MainActivity extends AppCompatActivity {
 
         final String workoutName = "Athena";
 
+        final Workout.WorkoutBuilder workoutBuilder =
+                Workout.builder().sumOfReps(0).sumOfTime(0).name(workoutName).roundExercises(ImmutableList.of());
+
         buildPropertyChangeListener(formController)
                 .flatMap(model -> {
                     final Exercise.ExerciseDef exerciseOne = Exercise.ExerciseDef.valueOf(model.getValue(FILTER_EXERCISE_1).toString());
@@ -155,23 +158,24 @@ public class MainActivity extends AppCompatActivity {
                                         : compare;
 
                             })
-                            .toList()
-                            .zipWith(Observable.just(Workout.builder().name(workoutName)),
-                                    (roundExercises, workoutBuilder) -> {
-                                        Workout previous = workoutBuilder.build();
-                                        for (RoundExercise roundExercise : roundExercises) {
-                                            previous = workoutBuilder
-                                                    .sumOfReps(previous.getSumOfReps() +
-                                                            roundExercise.getExercise().getTrainingVolume())
-                                                    .build();
+                            .reduce(workoutBuilder,
+                                    new Func2<Workout.WorkoutBuilder, RoundExercise, Workout.WorkoutBuilder>() {
+                                        @Override
+                                        public Workout.WorkoutBuilder call(Workout.WorkoutBuilder workoutBuilder, RoundExercise roundExercise) {
+                                            Workout previous = workoutBuilder.build();
+                                            return workoutBuilder
+                                                    .sumOfReps(0)
+                                                    .sumOfTime(0)
+                                                    .roundExercises(FluentIterable.concat(previous.getRoundExercises(),
+                                                                    ImmutableList.of(roundExercise)).toList());
                                         }
-                                        return workoutBuilder.build();
-
                                     });
+
+
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(workout -> {
-                    ExerciseAdapter adapter = new ExerciseAdapter(workout);
+                    ExerciseAdapter adapter = new ExerciseAdapter(workout.build());
                     recyclerView.setAdapter(adapter);
                 });
 
